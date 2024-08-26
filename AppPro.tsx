@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-end', // it moves our item from left to right in react native
     justifyContent: 'center', //moves our item from top to bottom in react native
+    backgroundColor: '#FF0000',
   },
   whiteText: {
     color: '#FFFFFF',
