@@ -14,8 +14,8 @@ const App = () => {
   const [isPassGenerated, setIsPassGenerated] = useState(false);
   const [lowerCase, setLowerCase] = useState(true);
   const [upperCase, setUpperCase] = useState(false);
-  const [numbers, useNumbers] = useState(false);
-  const [symbols, useSymbols] = useState(false);
+  const [numbers, setNumbers] = useState(false);
+  const [symbols, setSymbols] = useState(false);
 
   const generatePasswordString = (passwordLength: number) => {
     let characterList = '';
@@ -33,6 +33,11 @@ const App = () => {
     if (symbols) {
       characterList += symbols;
     }
+
+    const passwordResult = createPassword(characterList, passwordLength);
+
+    setPasswprd(passwordResult);
+    setIsPassGenerated(true);
   };
 
   const createPassword = (characters: string, passwordLength: number) => {
@@ -46,7 +51,12 @@ const App = () => {
   };
 
   const resetPasswordState = () => {
-    //
+    setPasswprd('');
+    setIsPassGenerated(false);
+    setLowerCase(true);
+    setUpperCase(false);
+    setNumbers(false);
+    setSymbols(false);
   };
 
   return (
