@@ -1,6 +1,7 @@
-import {View, Text, SafeAreaView, ScrollView} from 'react-native';
+import {View, Text, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 import {number, object} from 'yup';
+import {Formik} from 'formik';
 
 const PasswordSchema = object().shape({
   passwordLength: number()
@@ -25,13 +26,16 @@ const App = () => {
     const specialChars = '!@#$%^&*()_+';
 
     if (upperCase) {
-      characterList += upperCase;
+      characterList += upperCaseChars;
     }
     if (lowerCase) {
-      characterList += numbers;
+      characterList += lowerCaseChars;
+    }
+    if (numbers) {
+      characterList += digitChars;
     }
     if (symbols) {
-      characterList += symbols;
+      characterList += specialChars;
     }
 
     const passwordResult = createPassword(characterList, passwordLength);
@@ -60,10 +64,45 @@ const App = () => {
   };
 
   return (
-    <View>
-      <Text>App</Text>
-    </View>
+    <ScrollView keyboardShouldPersistTaps="handled">
+      <SafeAreaView style={styles.appContainer}>
+        <View style={styles.formConatiner}>
+          <Text style={styles.title}>
+            <Formik
+              initialValues={{passwordLength: ''}}
+              validationSchema={PasswordSchema}
+              onSubmit={values => {
+                console.log('formik values...', values);
+                generatePasswordString(+values.passwordLength);
+              }}>
+              {({
+                values,
+                errors,
+                touched,
+                isValid,
+                handleChange,
+                handleSubmit,
+                handleReset,
+                /* and other goodies */
+              }) => (
+                <>
+                  <View style={styles.inputWrapper}></View>
+                  <View style={styles.inputWrapper}></View>
+                  <View style={styles.inputWrapper}></View>
+                  <View style={styles.inputWrapper}></View>
+                  <View style={styles.inputWrapper}></View>
+
+                  <View style={styles.formActions}></View>
+                </>
+              )}
+            </Formik>
+          </Text>
+        </View>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({});
 
 export default App;
